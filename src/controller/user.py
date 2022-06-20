@@ -3,6 +3,16 @@ from src.models.models import s
 from src.helper.hash_password import hash_password
 
 
+#Find_user_by_id
+def find_user_by_id(id):
+    user = s.query(User).filter(User.id == id).first()
+    return user
+
+#Find user by username
+def find_user_by_username(username):
+    user = s.query(User).filter(User.username == username).first()
+    return user
+
 #Find user by email
 def find_user_by_email(email):
     email = email.lower()
@@ -27,11 +37,3 @@ def all_user():
     users = s.query(User).all()
     return users
 
-sultan_mahmud_sekartaji = new_user("Sultan", 
-                                "Mahmud", 
-                                "Sekartaji", 
-                                "sultan.sekartaji", 
-                                "mahmud.sultansekartaji@gmail.com", 
-                                "123456789")
-
-print(all_user())

@@ -11,6 +11,7 @@ sqlalchemy = "*"
 alembic = "*"
 psycopg2 = "*"
 fastapi-login = "*"
+pytest = "*"
 
 [dev-packages]
 

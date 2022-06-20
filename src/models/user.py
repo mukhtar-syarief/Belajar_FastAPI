@@ -17,4 +17,4 @@ class User(Base):
     posts = relationship("Post", back_populates = "user", cascade = "all, delete")
 
     def __repr__(self):
-        return f"User(id = {self.id}, nama = {self.nama}, email = {self.email}, username = {self.username}, created_at = {self.created_at}, last_modified = {self.last_modified})"
+        return f"User(id = {self.id},  first_name = {self.first_name}, middle_name = {self.middle_name}, last_name = {self.last_name}, username = {self.username}, email = {self.email}, created_at = {self.created_at}, last_modified = {self.last_modified})"
