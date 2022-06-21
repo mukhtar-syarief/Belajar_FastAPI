@@ -1,4 +1,5 @@
 from src.models.user import User
+from src.models.user_detail import UserDetail
 from src.models.models import s
 from src.helper.hash_password import hash_password
 
@@ -20,14 +21,27 @@ def find_user_by_email(email):
     return user
 
 #Create a new user
-def new_user(first_name, middle_name, last_name, username, email, password):
+def new_user(first_name, middle_name, last_name, username, jenis_kelamin, email, nomor_telepon, address, password):
     new_user = User(first_name = first_name,
                     middle_name = middle_name,
                     last_name = last_name,
+                    jenis_kelamin = jenis_kelamin,
                     username = username,
                     email = email.lower(),
-                    password = hash_password(password))
+                    nomor_telepon = nomor_telepon)
     s.add(new_user)
+    s.commit()
+    user_detail = UserDetail(first_name = first_name,
+                            middle_name = middle_name,
+                            last_name = last_name,
+                            jenis_kelamin = jenis_kelamin,
+                            username = username,
+                            email = email.lower(),
+                            address = address,
+                            nomor_telepon = nomor_telepon,
+                            password = hash_password(password),
+                            user = new_user)
+    s.add(user_detail)
     s.commit()
     user = find_user_by_email(email)
     return user

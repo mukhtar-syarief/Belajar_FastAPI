@@ -12,6 +12,8 @@ alembic = "*"
 psycopg2 = "*"
 fastapi-login = "*"
 pytest = "*"
+pyjwt = {extras = ["crypto"], version = "*"}
+requests = "*"
 
 [dev-packages]
 

@@ -2,6 +2,7 @@ from logging.config import fileConfig
 
 from src.models.user import User
 from src.models.post import Post
+from src.models.user_detail import UserDetail
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool
