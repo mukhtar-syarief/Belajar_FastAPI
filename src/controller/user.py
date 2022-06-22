@@ -1,7 +1,7 @@
 from src.models.user import User
 from src.models.user_detail import UserDetail
 from src.models.models import s
-from src.helper.hash_password import hash_password
+from src.helper.hash_password_md5 import hash_password
 
 
 #Find_user_by_id

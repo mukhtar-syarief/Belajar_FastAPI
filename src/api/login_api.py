@@ -1,5 +1,5 @@
 from src.controller.user import find_user_by_username
-from src.helper.hash_password import hash_password
+from src.helper.hash_password_md5 import hash_password
 from fastapi import APIRouter
 from pydantic import BaseModel
 

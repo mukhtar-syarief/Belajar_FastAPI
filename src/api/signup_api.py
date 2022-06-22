@@ -1,7 +1,7 @@
 from typing import Optional
 from src.controller.user import find_user_by_username, find_user_by_email, new_user
-from fastapi import APIRouter
-from pydantic import BaseModel, validator
+from fastapi import APIRouter, HTTPException, status
+from pydantic import BaseModel, Field, validator
 
 signup = APIRouter()
 
@@ -29,6 +29,17 @@ class Signup(BaseModel):
     nomor_telepon: str
     address: str
     
+class UserAuth(BaseModel):
+    first_name: str
+    middle_name: str
+    last_name: str
+    jenis_kelamin: str
+    email: str
+    username: str
+    nomor_telepon: str
+    address: str
+
+
 
 @signup.get('/signup', response_model= GetSignup)
 def signup_page():
@@ -45,24 +56,45 @@ def signup_page():
             "confirm_password": "Masukkan Password Anda"}
 
 @signup.post("/signup")
-def signup_page(payload: GetSignup):
-    try:
-        user = find_user_by_username(payload.username)
-        if user:
-            return {"message": "Username Sudah Terdaftar"}
-        else:
-            user = find_user_by_email(payload.email)
-            if user:
-                return {"message": "Email Sudah Terdaftar"}
-            else:
-                user = new_user(payload.first_name, payload.middle_name, payload.last_name, payload.username, payload.jenis_kelamin, payload.email, payload.nomor_telepon, payload.address, payload.password)
-                return {"first_name": user.first_name,
-                        "middle_name": user.middle_name,
-                        "last_name": user.last_name,
-                        "jenis_kelamin": user.jenis_kelamin,
-                        "username": user.username,
-                        "email": user.email,
-                        "nomor_telepon": user.nomor_telepon,
-                        "address": user.address}
-    except ValueError:
-        return None
+def signup_page(data: UserAuth):
+    user = find_user_by_username(data.username)
+    if user:
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = f"User with username {data.username} sudah ada.!"
+        )
+    user = {
+        "first_name": data.first_name,
+        "middle_name": data.middle_name,
+        "last_name": data.last_name,
+        "jenis_kelamin": data.jenis_kelamin,
+        "email": data.email,
+        "username": data.username,
+        "nomor_telepon": data.username,
+        "address": data.address
+    }
+    #db[data.email] = user
+    return user
+    
+    
+# def sign_up(payload: GetSignup):
+#     try:
+#         user = find_user_by_username(payload.username)
+#         if user:
+#             return {"message": "Username Sudah Terdaftar"}
+#         else:
+#             user = find_user_by_email(payload.email)
+#             if user:
+#                 return {"message": "Email Sudah Terdaftar"}
+#             else:
+#                 user = new_user(payload.first_name, payload.middle_name, payload.last_name, payload.username, payload.jenis_kelamin, payload.email, payload.nomor_telepon, payload.address, payload.password)
+#                 return {"first_name": user.first_name,
+#                         "middle_name": user.middle_name,
+#                         "last_name": user.last_name,
+#                         "jenis_kelamin": user.jenis_kelamin,
+#                         "username": user.username,
+#                         "email": user.email,
+#                         "nomor_telepon": user.nomor_telepon,
+#                         "address": user.address}
+#     except ValueError:
+#         return None

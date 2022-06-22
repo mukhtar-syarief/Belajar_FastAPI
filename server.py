@@ -1,8 +1,10 @@
 from fastapi import FastAPI
 # from src.models.user import User
+
 from src.api.home_api import home
 from src.api.login_api import login
 from src.api.signup_api import signup
+from src.api.user_api import user
 # from fastapi_login import LoginManager
 
 def create_app():
@@ -11,6 +13,7 @@ def create_app():
     app.include_router(home)
     app.include_router(login)
     app.include_router(signup)
+    app.include_router(user)
 
     # SECRET = "MencintaiDalamSepi"
     # login_manager = LoginManager(SECRET, "/login")
