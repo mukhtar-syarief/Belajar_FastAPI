@@ -1,3 +1,4 @@
+import email
 from typing import Optional
 from src.controller.user import find_user_by_username, find_user_by_email, new_user
 from fastapi import APIRouter, HTTPException, status
@@ -62,19 +63,28 @@ def signup_page(data: UserAuth):
         raise HTTPException(
             status_code = status.HTTP_400_BAD_REQUEST,
             detail = f"User with username {data.username} sudah ada.!"
-        )
-    user = {
-        "first_name": data.first_name,
-        "middle_name": data.middle_name,
-        "last_name": data.last_name,
-        "jenis_kelamin": data.jenis_kelamin,
-        "email": data.email,
-        "username": data.username,
-        "nomor_telepon": data.username,
-        "address": data.address
-    }
+            )
+    else:
+        user = find_user_by_email(data.email)
+        if user:
+            raise HTTPException(
+                status_code = status.HTTP_400_BAD_REQUEST,
+                detail = f"User with email {data.email} sudah ada.!"
+            )
+        else:
+            user = {
+                "first_name": data.first_name,
+                "middle_name": data.middle_name,
+                "last_name": data.last_name,
+                "jenis_kelamin": data.jenis_kelamin,
+                "email": data.email,
+                "username": data.username,
+                "nomor_telepon": data.username,
+                "address": data.address
+            }
+            return user
     #db[data.email] = user
-    return user
+    # return user
     
     
 # def sign_up(payload: GetSignup):

@@ -1,44 +1,37 @@
+from typing import Optional
+from src.schemes.user import Login, ResponLogin
+from src.helper.hash_password_jwt import create_access_token, create_refresh_token, verify_password
 from src.controller.user import find_user_by_username
-from src.helper.hash_password_md5 import hash_password
-from fastapi import APIRouter
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi.security import OAuth2PasswordRequestForm
 
 login = APIRouter()
 
-class GetLogin(BaseModel):
-    message: str
-    username: str
-    password: str
-
-class Login(BaseModel):
-    username = str
-    first_name = str
-    middle_name = str
-    last_name = str
-    email = str
-    password = str
-
-
-@login.get('/login', response_model = GetLogin)
+@login.get('/login', response_model = Login)
 def login_page():
-    return {"message": "Silahkan Login Terlebih Dahulu",
+    return {
             "username": "Masukkan Username Anda",
-            "password": "Masukkan Password Anda"}
+            "password": "Masukkan Password Anda"
+        }
 
-@login.post("/login", response_model=Login)
-def login_page(payload: GetLogin):
-    user = find_user_by_username(payload.username)
+@login.post("/login", response_model = ResponLogin)
+def login_page(form_data: OAuth2PasswordRequestForm = Depends()):
+    user = find_user_by_username(form_data.username)
     if user:
-        if user.password == hash_password(payload.password):
-            return {"username": user.username,
-                "first_name": user.first_name,
-                "middle_name": user.middle_name,
-                "last_name": user.last_name,
-                "email": user.email,
-                "password": user.password}
+        hash_password = user.detail.password
+        if not verify_password(form_data.password, hash_password):
+            raise HTTPException(
+                status_code = status.HTTP_400_BAD_REQUEST,
+                detail = "Password yang Anda masukkan salah.!"
+            )
         else:
-            return {"message": "Password Salah"}
+            return {
+                "access_token": create_access_token(user.email),
+                "refresh_token": create_refresh_token(user.email)}
     else:
-        return {"message": "Username Yang Anda Masukkan Tidak Terdaftar"} 
+        raise HTTPException(
+            status_code = status.HTTP_400_BAD_REQUEST,
+            detail = "Username Yang Anda Masukkan Tidak Terdaftar.!"
+        )
     
     
