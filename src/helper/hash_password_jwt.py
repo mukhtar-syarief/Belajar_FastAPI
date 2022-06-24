@@ -84,7 +84,7 @@ ALGORITHM = "HS256"
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated = "auto")
 
-token_oauth = OAuth2PasswordBearer(tokenUrl = "/login", scheme_name = "JWT")
+token_oauth = OAuth2PasswordBearer(tokenUrl = "token", scheme_name = "JWT")
 
 def get_haslib_password(password):
     return pwd_context.hash(password)

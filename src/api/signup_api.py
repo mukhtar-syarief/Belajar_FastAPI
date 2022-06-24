@@ -72,6 +72,9 @@ def signup_page(data: UserAuth):
                 detail = f"User with email {data.email} sudah ada.!"
             )
         else:
+            ####--TAMBAHKAN CREATE NEW USER DISINI--#####
+
+            ##################-- END --##################
             user = {
                 "first_name": data.first_name,
                 "middle_name": data.middle_name,
