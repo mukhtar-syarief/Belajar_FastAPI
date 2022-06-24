@@ -14,18 +14,18 @@
 # print(find_user_by_username("johndoe"))
 
 
-# from src.controller.user import find_user_by_username
-# from src.helper.hash_password_jwt import get_haslib_password, verify_password
+from src.controller.user import find_user_by_username
+from src.helper.hash_password_jwt import get_haslib_password, verify_password
 
-# print("#############################")
-# print(get_haslib_password("secret"))
+print("#############################")
+print(get_haslib_password("secret"))
 
-# print("#############################")
-# print(get_haslib_password("rahasia"))
+print("#############################")
+print(get_haslib_password("rahasia"))
 
-# print("#############################")
+print("#############################")
 
-# user = find_user_by_username("johndoe")
+user = find_user_by_username("johndoe")
 
 # def apa_password_sama(password, hash_password):
 #     if verify_password(password, hash_password):
