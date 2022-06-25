@@ -1,8 +1,10 @@
 from logging.config import fileConfig
 
 from src.models.user import User
-from src.models.post import Post
 from src.models.user_detail import UserDetail
+from src.models.product import Product
+from src.models.product_type import ProductType
+from src.models.product_type_assosiation import ProductTypeAssosiation
 
 from sqlalchemy import engine_from_config
 from sqlalchemy import pool

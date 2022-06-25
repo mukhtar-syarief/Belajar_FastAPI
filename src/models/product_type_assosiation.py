@@ -1,7 +1,8 @@
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.orm import relationship
-from models.models import Base
-
+from ..models.models import Base
+from ..models.product import Product
+from ..models.product_type import ProductType
 
 
 class ProductTypeAssosiation(Base):
@@ -12,3 +13,6 @@ class ProductTypeAssosiation(Base):
 
     product = relationship("Product")
     product_type = relationship("ProductType")
+
+    def __repr__(self):
+        return f"ProductTypeAssosiation(id = {self.id}, product_id = {self.product_id}, product_type_id = {self.product_type_id})"

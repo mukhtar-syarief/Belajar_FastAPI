@@ -1,7 +1,6 @@
 from sqlalchemy import Column, Integer, String, Text
 from sqlalchemy.orm import relationship
 from src.models.models import Base
-from src.models.post import Post
 from src.models.user_detail import UserDetail
 from src.models.product import Product
 
