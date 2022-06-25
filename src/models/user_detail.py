@@ -7,13 +7,13 @@ class UserDetail(Base):
     __tablename__ = "user_detail"
     id = Column(Integer, primary_key = True)
     user_id = Column(Integer, ForeignKey("users.id", ondelete = "CASCADE", onupdate = "CASCADE"))
-    name = Column(String, ForeignKey("users.name", ondelete = "CASCADE", onupdate = "CASCADE"))
+    name = Column(String)
     jenis_kelamin = Column(Text)
     address = Column(Text)
     username = Column(Text, ForeignKey("users.username", ondelete = "CASCADE", onupdate = "CASCADE"))
     email = Column(Text, unique = True)
     nomor_telepon = Column(Text, unique = True)
-    password = Column(Text, ForeignKey("users.password"))
+    password = Column(Text)
     created_at = Column(DateTime, default = func.now())
     last_modified = Column(DateTime, default = func.now(), onupdate = func.now())
 

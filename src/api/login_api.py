@@ -1,5 +1,4 @@
-from typing import Optional
-from src.schemes.user import Login, ResponLogin
+from src.schemes.login import Login, ResponLogin
 from src.helper.hash_password_jwt import create_access_token, create_refresh_token, verify_password
 from src.controller.user import find_user_by_username
 from fastapi import APIRouter, Depends, HTTPException, status
@@ -32,6 +31,5 @@ def login_page(form_data: OAuth2PasswordRequestForm = Depends()):
         raise HTTPException(
             status_code = status.HTTP_400_BAD_REQUEST,
             detail = "Username Yang Anda Masukkan Tidak Terdaftar.!"
-        )
-    
+        ) 
     
